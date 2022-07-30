@@ -11,18 +11,23 @@ function formatDate() {
     let dateNow = new Date();
     
     let difference = Number(dateNow) - convertDate;
-    if (difference < 1000) {
+    if (difference > 0 && difference < 1000) {
         alert("прямо сейчас");
     }    
-    else if (difference < 60000) {
+    else if (difference > 0 && difference < 60000) {
         let seconds = Math.round(difference / 1000);
         alert(`${seconds} сек. назад`);
     }
-    else if (difference < 60 * 60000) {
+    else if (difference > 0 && difference < 60 * 60000) {
         let minutes = Math.round(difference / 60000);
         alert(`${minutes} мин. назад`);
     }
     else {
-        alert(date);
+        let year = date.slice(2, 4); 
+        let month = date.slice(5, 7);
+        let day = date.slice(8, 10);
+        let hour = date.slice(11, 13);
+        let minute = date.slice(14, 16);
+        alert(`${day}.${month}.${year} ${hour}:${minute}`);
     }
 }
