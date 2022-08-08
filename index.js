@@ -1,33 +1,31 @@
-let input = document.createElement("div");
-input.innerHTML =`<p>Please enter date in the format YYYY-MM-DDTHH:mm:ss.sssZ:</p><input class="date" type="text" /><button>Enter</button>`;
-document.body.append(input);
-
-let btn = document.querySelector("button");
-btn.addEventListener("click", formatDate);
-
-function formatDate() {
-    let date = document.querySelector(".date").value;
-    let convertDate = Date.parse(date);
+function formatDate(x) {
     let dateNow = new Date();
-    
-    let difference = Number(dateNow) - convertDate;
+    let difference = dateNow - x;
+
     if (difference > 0 && difference < 1000) {
-        alert("прямо сейчас");
+        return("прямо сейчас");
     }    
     else if (difference > 0 && difference < 60000) {
         let seconds = Math.round(difference / 1000);
-        alert(`${seconds} сек. назад`);
+        return(`${seconds} сек. назад`);
     }
     else if (difference > 0 && difference < 60 * 60000) {
         let minutes = Math.round(difference / 60000);
-        alert(`${minutes} мин. назад`);
+        return(`${minutes} мин. назад`);
     }
     else {
-        let year = date.slice(2, 4); 
-        let month = date.slice(5, 7);
-        let day = date.slice(8, 10);
-        let hour = date.slice(11, 13);
-        let minute = date.slice(14, 16);
-        alert(`${day}.${month}.${year} ${hour}:${minute}`);
+        let date = x;
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        return(`0${day}.0${month}.${year} ${hour}:${minute}`);
     }
 }
+
+alert(formatDate(new Date(new Date - 1))); // "прямо сейчас"
+alert(formatDate(new Date(new Date - 30 * 1000))); // "30 сек. назад"
+alert(formatDate(new Date(new Date - 5 * 60 * 1000))); // "5 мин. назад"
+//вчерашняя дата вроде 31.12.2016, 20:00
+alert(formatDate(new Date(new Date - 86400 * 4 * 1000)));
